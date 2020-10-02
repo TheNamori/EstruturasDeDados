@@ -1,0 +1,228 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define FALSO 0
+#define VERDADEIRO 1
+#define FINALIZAR 2
+#define N 10
+int menu;
+int i, achou, op;
+char nome[100];
+float peso, altura;
+int idade;
+
+typedef struct 
+{
+  char Nome[10];
+  float Peso;   
+  int Idade;    
+  float Altura; 
+} Pessoa; 
+
+Pessoa SetPessoa(char nome[10], int idade, float peso, float altura){
+  Pessoa P;
+  strncpy(P.Nome, nome, 10);
+  P.Idade = idade;
+  P.Peso = peso;
+  P.Altura = altura;
+  return P; 
+}
+
+void ImprimePessoa(Pessoa P){ 
+    printf("Nome: %-10s \tIdade: %3d \tPeso: %6.2f \tAltura: %.2f\n", P.Nome, P.Idade, P.Peso, P.Altura);
+}
+
+void ordenar(Pessoa *P, int tipo);
+
+void buscar(Pessoa *P, int tipo);
+
+int main(){
+  Pessoa alunos[N];
+  alunos[0] = SetPessoa("David", 25, 83.2, 1.84);
+  alunos[1] = SetPessoa("Deivid", 29, 73.1, 1.78);
+  alunos[2] = SetPessoa("Day", 21, 56.8, 1.56);
+  alunos[3] = SetPessoa("Zeus", 18, 53.3, 1.60);
+  alunos[4] = SetPessoa("Thor", 25, 93.1, 2.07);
+  alunos[5] = SetPessoa("Dayane", 27, 69.2, 1.55);
+  alunos[6] = SetPessoa("Jonas", 15, 113.5, 1.97);
+  alunos[7] = SetPessoa("Joanne", 35, 61.7, 1.69);
+  alunos[8] = SetPessoa("JoaoPaulo", 28, 74.6, 1.63);
+  alunos[9] = SetPessoa("Abraao", 23, 49.1, 1.49);
+
+  printf("\nMetodo de Pesquisa Sequencial\n");
+  printf("\nDigite 1 para ordenar as pessoas ou 2 para buscar pessoa\n");
+  scanf("%d", &menu);
+
+  if (menu == 1){
+    printf("\nDigite a opção desejada:");
+    printf("\n1 - Ordenação pelo nome crescente");
+    printf("\n2 - Ordenação pelo nome decrescente");
+    printf("\n3 - Ordenação pela idade crescente");
+    printf("\n4 - Ordenação pela idade decrescente");
+    printf("\n5 - Ordenação pelo peso crescente");
+    printf("\n6 - Ordenação pelo peso decrescente");
+    printf("\n7 - Ordenação pela altura crescente");
+    printf("\n8 - Ordenação pela altura decrescente\n");
+    scanf("%d", &op);
+    if (op >=1 && op <= 8){
+      if      (op==1) printf("\nOrdenação pelo nome crescente\n");
+      else if (op==2) printf("\nOrdenação pelo nome decrescente\n");
+      else if (op==3) printf("\nOrdenação pela idade crescente\n");
+      else if (op==4) printf("\nOrdenação pela idade decrescente\n");
+      else if (op==5) printf("\nOrdenação pelo peso crescente\n");
+      else if (op==6) printf("\nOrdenação pelo peso decrescente\n");
+      else if (op==7) printf("\nOrdenação pela altura crescente\n");
+      else if (op==8) printf("\nOrdenação pela altura decrescente\n");
+      ordenar(alunos, op);
+      }
+    }
+  else if (menu == 2){
+    printf("\nDigite a opção desejada:");
+    printf("\n1 - Buscar pelo nome");
+    printf("\n2 - Buscar pela idade");
+    printf("\n3 - Buscar pelo peso");
+    printf("\n4 - Buscar pela altura\n");
+    scanf("%d", &op);
+    buscar(alunos, op);
+  }
+
+  printf("\nFim do programa");
+  return 0;
+}
+
+void buscar(Pessoa P[10], int tipo){
+  if (op >=1 && op <= 4){
+    if (op==1) {
+      printf("\nBuscar pelo nome \n");
+      printf("\nNome da pessoa a ser procurada (digite finalizar para terminar):\n");
+      scanf("%s",nome);
+      if(strcmp(nome, "finalizar")){
+        achou = FINALIZAR;
+      }
+      while(achou == VERDADEIRO){
+        for(int i = 0; i < N; i++ ){
+          if (!strcmp (P[i].Nome, nome)){
+            ImprimePessoa(P[i]);
+            achou = VERDADEIRO;
+          } 
+        }
+      }
+      if(achou == FALSO) printf("\nPessoa não encontrada");
+      if(achou == FINALIZAR) printf("/")
+      
+    }
+    else if (op==2) {
+      printf("\nBuscar pela idade \n");
+      while (VERDADEIRO){
+        printf("\nIdade da pessoa a ser procurada (digite -1 para terminar): ");
+        scanf("%i",&idade);
+        if (peso==-1) break;
+          achou = FALSO;
+        
+        while ( achou==FALSO && i<=N ){
+          for(int i = 0; i < N; i++ ){
+            if (P[i].Idade == idade){
+              achou = VERDADEIRO;
+              ImprimePessoa(P[i]);
+            }
+          }
+        }
+
+        if (achou==FALSO)
+          printf("\nPessoa não encontrada\n");
+      }
+    }
+    else if (op==3) {
+      printf("\nBuscar pelo peso \n");
+      while (VERDADEIRO){
+        printf("\nPeso da pessoa a ser procurada (digite -1 para terminar): ");
+        scanf("%f",&peso);
+        if (peso==-1) break;
+          achou = FALSO;
+        
+        while ( achou==FALSO && i<=N ){
+          for(int i = 0; i < N; i++ ){
+            for(int l = 0; l < N; l++ ){
+              if (P[i].Peso == peso){
+                achou = VERDADEIRO;
+                ImprimePessoa(P[i]);
+              }
+            }
+          }
+        }
+
+        if (achou==FALSO)
+          printf("\nPessoa não encontrada\n");
+      }
+    }
+    else if (op==4) {
+      printf("\nBuscar pela altura \n");
+      while (VERDADEIRO){
+        printf("\nAltura da pessoa a ser procurada (digite -1 para terminar): ");
+        scanf("%f",&altura);
+        if (altura==-1) break;
+          achou = FALSO;
+        
+        while ( achou==FALSO && i<=N ){
+          for(int i = 0; i < N; i++ ){
+            for(int l = 0; l < N; l++ ){
+              if (P[i].Nome[l] == altura){
+                achou = VERDADEIRO;
+                ImprimePessoa(P[i]);
+              }
+            }
+          }
+        }
+
+        if (achou==FALSO)
+          printf("\nPessoa não encontrada\n");
+      }
+    }
+  }
+  
+}
+
+void ordenar(Pessoa P[10], int tipo){
+  Pessoa troca;
+
+  for(int i=0; i<N-1; i++){
+    for(int j=0; j<N-i-1; j++){
+      int trocar = 0;
+      if (tipo==1){
+        if(P[j].Nome[0] >= P[j+1].Nome[0]){
+          for(int k=0;k<10;k++){ 
+            if(P[j].Nome[k]>P[j+1].Nome[k]){ 
+              trocar = 1;
+              break;
+            }else if (P[j].Nome[k]<P[j+1].Nome[k]) break;
+          }
+        }
+      }
+      else if (tipo==2){
+        if(P[j].Nome[0] <= P[j+1].Nome[0]){
+          for(int k=0;k<10;k++){ 
+            if(P[j].Nome[k] < P[j+1].Nome[k]){ 
+              trocar = 1;
+              break;
+            }else if (P[j].Nome[k] > P[j+1].Nome[k]) break;
+          }
+        }
+      }
+      else if (tipo==3){ if(P[j].Idade  > P[j+1].Idade)  trocar = 1;}
+      else if (tipo==4){ if(P[j].Idade  < P[j+1].Idade)  trocar = 1;}
+      else if (tipo==5){ if(P[j].Peso   > P[j+1].Peso)   trocar = 1;}
+      else if (tipo==6){ if(P[j].Peso   < P[j+1].Peso)   trocar = 1;}
+      else if (tipo==7){ if(P[j].Altura > P[j+1].Altura) trocar = 1;}
+      else if (tipo==8){ if(P[j].Altura < P[j+1].Altura) trocar = 1;}
+      if(trocar==1){
+        troca = P[j];
+        P[j] = P[j+1];
+        P[j+1] = troca;
+      }
+    }
+  }
+  for(int i=0; i<N; i++){
+    ImprimePessoa(P[i]);
+  }
+}
